@@ -7,3 +7,4 @@ groq
 pydantic
 typing
 pymysql
+uvicorn
