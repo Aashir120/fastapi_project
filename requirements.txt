@@ -1,0 +1,9 @@
+sqlalchemy
+fastapi
+httpx
+openai
+langchain_xai
+groq
+pydantic
+typing
+pymysql
