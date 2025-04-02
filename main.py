@@ -1,5 +1,6 @@
 import json
 from fastapi import FastAPI,HTTPException,Depends,status
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from typing import Annotated
@@ -10,6 +11,22 @@ from service import getBookContent, getBookMetaData, getGroqResponse
 
 app = FastAPI()
 models.Base.metadata.create_all(bind=engine)
+
+# Allow all origins (change to specific domain in production)
+origins = [
+    "http://localhost:5173",  # React local dev
+    "https://gutenberg-app.vercel.app",  # Your deployed frontend
+    "*",  # Allow all (use with caution)
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # Allowed origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all HTTP methods
+    allow_headers=["*"],  # Allow all headers
+)
+
 def get_db():
     db = sessionLocal()
     try:
